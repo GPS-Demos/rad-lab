@@ -47,6 +47,9 @@ const DefaultStepCreator: React.FC<IDefaultStepCreatorProps> = ({
       }
     })
     setZoneListData(zoneListData)
+
+    // set first value as default zone while region changed
+    values["zone"] = zoneListData[0]
   }
 
   const onChangeRegion = (event: React.ChangeEvent<HTMLInputElement>) => {
