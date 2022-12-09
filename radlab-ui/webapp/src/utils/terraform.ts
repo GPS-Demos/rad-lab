@@ -4,6 +4,7 @@ import groupBy from "lodash/groupBy"
 import startCase from "lodash/startCase"
 import { IUIVariable, IObjKeyPair, IFormData } from "@/utils/types"
 import axios from "axios"
+import { envOrFail } from "@/utils/env"
 
 type IHCLVariable = {
   type: string
@@ -214,4 +215,24 @@ const checkModuleVariablesZero = async (moduleName: string) => {
       console.error(error)
     })
   return returnModuleVariableData
+}
+
+// To get Admin settings updated variables data
+const GCP_PROJECT_ID = envOrFail(
+  "NEXT_PUBLIC_GCP_PROJECT_ID",
+  process.env.NEXT_PUBLIC_GCP_PROJECT_ID,
+)
+
+export const getAdminSettingData = async () => {
+  const returnAdminVariableData = await axios
+    .get(`/api/settings?projectId=${GCP_PROJECT_ID}`)
+    .then((res) => {
+      return res.data.settings.variables
+    })
+    .catch((error) => {
+      console.error(error)
+      return null
+    })
+
+  return returnAdminVariableData
 }

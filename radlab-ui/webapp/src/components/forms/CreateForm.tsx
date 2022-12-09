@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react"
 import { FormikStepper } from "@/components/forms/FormikStepper"
 import StepCreator from "@/components/forms/StepCreator"
 import { IUIVariable, Deployment, DEPLOYMENT_STATUS } from "@/utils/types"
-import { groupVariables, initialFormikData } from "@/utils/terraform"
+import {
+  groupVariables,
+  initialFormikData,
+  getAdminSettingData,
+} from "@/utils/terraform"
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import { alertStore, userStore } from "@/store"
@@ -11,6 +15,7 @@ import { useTranslation } from "next-i18next"
 import Loading from "@/navigation/Loading"
 import UpdateSafeDeploymentModal from "@/components/UpdateSafeDeploymentModal"
 import { whereEq } from "ramda"
+import { mergeAll } from "ramda"
 
 interface CreateForm {
   formVariables: IUIVariable[]
@@ -102,9 +107,16 @@ const CreateForm: React.FC<CreateForm> = ({
           }
           initialObjData[title] = defaultValue
         }
-        setLoading(false)
       }
-      setInitialData(initialObjData)
+
+      const adminDefaultVariable = await getAdminSettingData()
+      const initialUpdateFormData = mergeAll([
+        initialObjData,
+        adminDefaultVariable,
+      ])
+
+      setInitialData(initialUpdateFormData)
+      setLoading(false)
     }
   }
 
