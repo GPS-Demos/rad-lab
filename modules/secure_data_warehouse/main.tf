@@ -118,10 +118,7 @@ resource "google_artifact_registry_repository_iam_member" "confidential_python_r
 }
 
 
-// The sample data we are using is a Public Bigquery Dataset Table
-// that contains a United States Internal Revenue Service form
-// that provides the public with financial information about a nonprofit organization
-// (https://console.cloud.google.com/marketplace/product/internal-revenue-service/irs-990?project=bigquery-public-data)
+// The sample data we are using is a Mock Drivers License data
 module "regional_deid_pipeline" {
   source = "GoogleCloudPlatform/secured-data-warehouse/google//modules/dataflow-flex-job"
 
@@ -137,8 +134,7 @@ module "regional_deid_pipeline" {
   staging_location        = "gs://${module.secured_data_warehouse.data_ingestion_bucket_name}/staging/"
 
   parameters = {
-    # query                          = "SELECT ein, name, ico, street, city, state, income_amt, revenue_amt FROM [bigquery-public-data:irs_990.irs_990_ein] LIMIT 10000"
-    query                          = "SELECT email, name, street, city, state, zip, dob, dl_id, exp_date FROM [${module.project_radlab_sdw_data_ingest.project_id}:${module.sdw_data_ingest_bq_dataset.bigquery_dataset.dataset_id}.${module.sdw_data_ingest_bq_dataset.external_table_ids[0]}] LIMIT 10000"
+    query                          = "SELECT email, name, street, city, state, zip, dob, dl_id, exp_date, issue_date FROM [${module.project_radlab_sdw_data_ingest.project_id}:${module.sdw_data_ingest_bq_dataset.bigquery_dataset.dataset_id}.${module.sdw_data_ingest_bq_dataset.external_table_ids[0]}] LIMIT 10000"
     deidentification_template_name = module.de_identification_template.template_full_path
     window_interval_sec            = 30
     batch_size                     = 1000
