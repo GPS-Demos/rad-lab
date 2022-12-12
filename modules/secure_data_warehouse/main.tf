@@ -154,34 +154,34 @@ resource "time_sleep" "wait_de_identify_job_execution" {
   ]
 }
 
-module "regional_reid_pipeline" {
-  source = "GoogleCloudPlatform/secured-data-warehouse/google//modules/dataflow-flex-job"
+# module "regional_reid_pipeline" {
+#   source = "GoogleCloudPlatform/secured-data-warehouse/google//modules/dataflow-flex-job"
 
-  project_id              = module.project_radlab_sdw_conf_data.project_id
-  name                    = "dataflow-flex-regional-dlp-reid-job-python-query"
-  container_spec_gcs_path = module.template_project.python_re_identify_template_gs_path
-  job_language            = "PYTHON"
-  region                  = var.region
-  #service_account_email   = module.secured_data_warehouse.dataflow_controller_service_account_email
-  service_account_email   = module.secured_data_warehouse.confidential_dataflow_controller_service_account_email
-  subnetwork_self_link    = module.dwh_networking_conf.subnets_self_links[0]
-  kms_key_name            = module.secured_data_warehouse.cmek_reidentification_crypto_key
-  temp_location           = "gs://${module.secured_data_warehouse.confidential_data_dataflow_bucket_name}/tmp/"
-  staging_location        = "gs://${module.secured_data_warehouse.confidential_data_dataflow_bucket_name}/staging/"
+#   project_id              = module.project_radlab_sdw_conf_data.project_id
+#   name                    = "dataflow-flex-regional-dlp-reid-job-python-query"
+#   container_spec_gcs_path = module.template_project.python_re_identify_template_gs_path
+#   job_language            = "PYTHON"
+#   region                  = var.region
+#   service_account_email   = module.secured_data_warehouse.dataflow_controller_service_account_email
+#   subnetwork_self_link    = module.dwh_networking_conf.subnets_self_links[0]
+#   kms_key_name            = module.secured_data_warehouse.cmek_reidentification_crypto_key
+#   temp_location           = "gs://${module.secured_data_warehouse.confidential_data_dataflow_bucket_name}/tmp/"
+#   staging_location        = "gs://${module.secured_data_warehouse.confidential_data_dataflow_bucket_name}/staging/"
 
-  parameters = {
-    input_table                    = "${module.project_radlab_sdw_non_conf_data.project_id}:${local.non_confidential_dataset_id}.${local.non_confidential_table_id}"
-    deidentification_template_name = module.de_identification_template.template_full_path
-    window_interval_sec            = 30
-    batch_size                     = 1000
-    dlp_location                   = var.region
-    dlp_project                    = module.project_radlab_sdw_data_govern.project_id
-    bq_schema                      = local.bq_schema_dl
-    output_table                   = local.bigquery_confidential_table
-    dlp_transform                  = "RE-IDENTIFY"
-  }
-  depends_on = [
-    time_sleep.wait_de_identify_job_execution,
-    google_bigquery_table.re_id
-  ]
-}
+#   parameters = {
+#     input_table                    = "${module.project_radlab_sdw_non_conf_data.project_id}:${local.non_confidential_dataset_id}.${local.non_confidential_table_id}"
+#     deidentification_template_name = module.de_identification_template.template_full_path
+#     window_interval_sec            = 30
+#     batch_size                     = 1000
+#     dlp_location                   = var.region
+#     dlp_project                    = module.project_radlab_sdw_data_govern.project_id
+#     bq_schema                      = local.bq_schema_dl
+#     output_table                   = local.bigquery_confidential_table
+#     dlp_transform                  = "RE-IDENTIFY"
+#   }
+#   depends_on = [
+#     time_sleep.wait_de_identify_job_execution,
+#     google_bigquery_table.re_id,
+#     # google_project_iam_binding.sa_user
+#   ]
+# }
