@@ -220,3 +220,21 @@ variable "subnet_ip" {
   type        = string
   default = "10.0.0.0/16"
 }
+variable "confidential_tags" {
+    type = map(object({
+    display_name = string
+    description = string
+  }))
+}
+variable "private_tags" {
+    type = map(object({
+    display_name = string
+    description = string
+  }))
+}
+variable "sensitive_tags" {
+    type = map(object({
+    display_name = string
+    description = string
+  }))
+}
