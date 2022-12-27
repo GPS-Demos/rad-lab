@@ -71,7 +71,7 @@ module "de_identification_template" {
   wrapped_key               = local.wrapped_key_secret_data
   dlp_location              = var.region
   template_id_prefix        = "de_identification"
-  template_file             = "${path.module}/templates/deidentification.tpl"
+  template_file             = "${path.module}/templates/deid.tpl"
   dataflow_service_account  = module.secured_data_warehouse.dataflow_controller_service_account_email
 
 }

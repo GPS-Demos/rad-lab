@@ -6,7 +6,7 @@ description= "$${description}"
 crypto_key= "$${crypto_key}"
 wrapped_key= "$${wrapped_key}"
 template_id= "$${template_id}"
-names=var.names
+fields=var.fields
   
    })
  }

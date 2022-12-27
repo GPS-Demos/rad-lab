@@ -7,11 +7,15 @@
                 "fieldTransformations": [
                     {
                         "fields": [
-                                %{for name in fields}
+                                
                                 {
-                                "name": "${name}"
+                                "name": "email"
                                 },
-                                %{endfor}                 
+                                
+                                {
+                                "name": "dl_id"
+                                },
+                                                 
                 ],
                         "primitiveTransformation": {
                             "cryptoDeterministicConfig": {

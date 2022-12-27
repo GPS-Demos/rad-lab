@@ -221,20 +221,29 @@ variable "subnet_ip" {
   default = "10.0.0.0/16"
 }
 variable "confidential_tags" {
+    description = "Provide list of confidential tags"
     type = map(object({
     display_name = string
     description = string
   }))
 }
 variable "private_tags" {
+    description = "Provide list of private tags"
     type = map(object({
     display_name = string
     description = string
   }))
 }
 variable "sensitive_tags" {
+    description = "Provide list of sensitive tags"
     type = map(object({
     display_name = string
     description = string
   }))
 }
+variable "fields" {
+    description = "Provide list of fields names"
+    type=list    
+}
+
+
