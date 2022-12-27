@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
 resource "google_data_catalog_taxonomy" "secure_taxonomy" {
   provider                  = google-beta
 

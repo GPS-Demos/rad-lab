@@ -7,13 +7,16 @@
                 "fieldTransformations": [
                     {
                         "fields": [
-                            {
+                                
+                                {
                                 "name": "email"
-                            },
-                            {
+                                },
+                                
+                                {
                                 "name": "dl_id"
-                            }
-                        ],
+                                },
+                                                 
+                ],
                         "primitiveTransformation": {
                             "cryptoDeterministicConfig": {
                                 "cryptoKey": {
