@@ -15,7 +15,7 @@
  */
 
 variable "access_context_manager_policy_id" {
-  description = "The id of the default Access Context Manager policy. Can be obtained by running `gcloud access-context-manager policies list --organization YOUR-ORGANIZATION_ID --format=\"value(name)\"`. {{UIMeta group=0 order=17 updatesafe }}"
+  description = "The id of the default Access Context Manager policy. Can be obtained by running `gcloud access-context-manager policies list --organization YOUR-ORGANIZATION_ID --format=\"value(name)\"`. {{UIMeta group=0 order=17 }}"
   type        = string
   default     = ""
 }
@@ -131,7 +131,7 @@ variable "deployment_id" {
   default     = null
 }
 variable "delete_contents_on_destroy" {
-  description = "(Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present."
+  description = "(Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. {{UIMeta group=0 order=18 }}"
   type        = bool
   default     = false
 }
