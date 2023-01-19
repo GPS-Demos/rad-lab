@@ -69,7 +69,7 @@ const MapNestedField: React.FC<MapNestedField> = ({ variable, validate }) => {
       event.preventDefault()
       if (mapNestedParentFieldKey) {
         // @ts-ignore
-        attributeItems[mapNestedParentFieldKey] = new Object()
+        attributeItems[mapNestedParentFieldKey] = {}
         setIsParentKeyEmpty(true)
       }
       setMapNestedParentFieldKey("")
@@ -98,9 +98,9 @@ const MapNestedField: React.FC<MapNestedField> = ({ variable, validate }) => {
           return (
             <div>
               {Object.keys(values[variable.name]).map(
-                (map_data: any, index: number) => (
+                (map_data: any) => (
                   <div
-                    key={index}
+                    key={map_data}
                     className="badge badge-info gap-1 mt-2 w-full h-auto py-1 px-2 md:py-1 md:px-4"
                   >
                     <span
@@ -110,7 +110,7 @@ const MapNestedField: React.FC<MapNestedField> = ({ variable, validate }) => {
                       <span className="text-sm">{map_data} : </span>
                       {Object.keys(values[variable.name][map_data]).map(
                         (map_inner_key, indexInner) => (
-                          <span key={indexInner}>
+                          <span key={map_inner_key}>
                             {indexInner ? ", " : ""}
                             {map_inner_key}=
                             {values[variable.name][map_data][map_inner_key]}
