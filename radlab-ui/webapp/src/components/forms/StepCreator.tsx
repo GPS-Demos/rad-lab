@@ -60,8 +60,8 @@ const StepCreator: React.FC<StepCreator> = ({ variableList, idx }) => {
     return error
   }
   const renderControls = (variable: IUIVariable) => {
-    let checkMapObject = variable.type.slice(0, 10)
-    if (checkMapObject === "map(object") {
+    let checkMapObject = variable.type.slice(0, 10).replace("(", "").trim()
+    if (checkMapObject === "mapobject") {
       return (
         <MapNestedField variable={variable} validate={validate(variable)} />
       )
