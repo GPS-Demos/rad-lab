@@ -8,6 +8,7 @@ import {
   IDeployment,
   TFStatus,
   TF_OUTPUT,
+  TF_OUTPUT_VARIABLE,
 } from "@/utils/types"
 import { useTranslation } from "next-i18next"
 import { alertStore } from "@/store"
@@ -19,8 +20,8 @@ interface ModuleOutputsProps {
 
 const isURL = (val: string) => val.search(/^https?:\/\//) > -1
 
-const renderTFValue = (val: string): JSX.Element => {
-  if (isURL(val)) {
+const renderTFValue = (val: any): JSX.Element => {
+  if (typeof val === "string" && isURL(val)) {
     return (
       <a
         className="block mb-2"
@@ -33,6 +34,7 @@ const renderTFValue = (val: string): JSX.Element => {
       </a>
     )
   }
+
   return (
     <div key={val} className="mb-2">
       {val}
@@ -40,17 +42,20 @@ const renderTFValue = (val: string): JSX.Element => {
   )
 }
 
-const renderTFValues = (val: any): JSX.Element => {
-  if (typeof val === "object" && !Array.isArray(val)) {
+const renderTFValues = (val: TF_OUTPUT_VARIABLE | null): JSX.Element => {
+  if (val === null || val.value === null) {
+    return <></>
+  }
+  if (typeof val.value === "object" && !Array.isArray(val.value)) {
     return (
       <>
-        {Object.keys(val).map((objKey: any) => (
+        {Object.entries(val.value).map(([objKey, objValue]) => (
           <div key={objKey}>
-            {typeof val[objKey] === "string" ? (
-              <div className="grid grid-cols-3 sm:grid-cols-2 gap-x-2 sm:gap-x-4 mt-1 break-words">
-                <div className="text-right text-faint col-span-1">{objKey}</div>
+            {typeof objValue === "string" ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+                <div className="text-left text-faint col-span-1">{objKey}</div>
                 <div className="col-span-2 sm:col-span-1 break-words">
-                  {renderTFValues(val[objKey])}
+                  {renderTFValue(objValue)}
                 </div>
               </div>
             ) : (
@@ -61,11 +66,11 @@ const renderTFValues = (val: any): JSX.Element => {
       </>
     )
   }
-  if (Array.isArray(val)) {
-    return <>{val.map(renderTFValue)}</>
+  if (Array.isArray(val.value)) {
+    return <>{val.value.map(renderTFValue)}</>
   }
 
-  return renderTFValue(val)
+  return renderTFValue(val.value)
 }
 
 const ModuleOutputs: React.FC<ModuleOutputsProps> = ({
@@ -141,7 +146,7 @@ const ModuleOutputs: React.FC<ModuleOutputsProps> = ({
         >
           <div className="text-right text-faint col-span-1">{variable}</div>
           <div className="col-span-2 sm:col-span-1 break-words">
-            {renderTFValues(output.value)}
+            {renderTFValues(output)}
           </div>
         </div>
       ))}
