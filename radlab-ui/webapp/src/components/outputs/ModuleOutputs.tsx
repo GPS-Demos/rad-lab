@@ -41,6 +41,26 @@ const renderTFValue = (val: string): JSX.Element => {
 }
 
 const renderTFValues = (val: any): JSX.Element => {
+  if (typeof val === "object" && !Array.isArray(val)) {
+    return (
+      <>
+        {Object.keys(val).map((objKey: any) => (
+          <div key={objKey}>
+            {typeof val[objKey] === "string" ? (
+              <div className="grid grid-cols-3 sm:grid-cols-2 gap-x-2 sm:gap-x-4 mt-1 break-words">
+                <div className="text-right text-faint col-span-1">{objKey}</div>
+                <div className="col-span-2 sm:col-span-1 break-words">
+                  {renderTFValues(val[objKey])}
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        ))}
+      </>
+    )
+  }
   if (Array.isArray(val)) {
     return <>{val.map(renderTFValue)}</>
   }
