@@ -59,7 +59,7 @@ const renderTFValues = (val: TF_OUTPUT_VARIABLE | null): JSX.Element => {
                 </div>
               </div>
             ) : (
-              <></>
+              <>{renderTFValues(objValue)}</>
             )}
           </div>
         ))}
