@@ -113,11 +113,7 @@ const mapHclToUIVar = (
       ? false
       : null,
     // In TF, desription = "" is how we say it's optional
-    required: hclVar.default
-      ? hclVar.default !== ""
-      : hclVar.default === undefined
-      ? true
-      : false,
+    required: typeof hclVar.default === "undefined" || hclVar.default === "",
     group,
     order,
     options,
