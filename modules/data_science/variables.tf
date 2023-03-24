@@ -20,37 +20,37 @@ variable "billing_account_id" {
 }
 
 variable "billing_budget_alert_spend_basis" {
-  description = "The type of basis used to determine if spend has passed the threshold. {{UIMeta group=0 order=6 updatesafe dependson=(create_budget=true) mandatory }}"
+  description = "The type of basis used to determine if spend has passed the threshold. {{UIMeta group=0 order=6 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = string
   default     = "CURRENT_SPEND"
 }
 
 variable "billing_budget_alert_spent_percents" {
-  description = "A list of percentages of the budget to alert on when threshold is exceeded. {{UIMeta group=0 order=7 updatesafe dependson=(create_budget=true) mandatory }}"
+  description = "A list of percentages of the budget to alert on when threshold is exceeded. {{UIMeta group=0 order=7 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = list(number)
   default     = [0.5, 0.7, 1]
 }
 
 variable "billing_budget_amount" {
-  description = "The amount to use as the budget in USD. {{UIMeta group=0 order=8 updatesafe dependson=(create_budget=true) mandatory }}"
+  description = "The amount to use as the budget in USD. {{UIMeta group=0 order=8 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = number
   default     = 500
 }
 
 variable "billing_budget_amount_currency_code" {
-  description = "The 3-letter currency code defined in ISO 4217 (https://cloud.google.com/billing/docs/resources/currency#list_of_countries_and_regions). It must be the currency associated with the billing account. {{UIMeta group=0 order=9 updatesafe dependson=(create_budget=true) mandatory }}"
+  description = "The 3-letter currency code defined in ISO 4217 (https://cloud.google.com/billing/docs/resources/currency#list_of_countries_and_regions). It must be the currency associated with the billing account. {{UIMeta group=0 order=9 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = string
   default     = "USD"
 }
 
 variable "billing_budget_credit_types_treatment" {
-  description = "Specifies how credits should be treated when determining spend for threshold calculations. {{UIMeta group=0 order=10 updatesafe dependson=(create_budget=true) mandatory }}"
+  description = "Specifies how credits should be treated when determining spend for threshold calculations. {{UIMeta group=0 order=10 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = string
   default     = "INCLUDE_ALL_CREDITS"
 }
 
 variable "billing_budget_labels" {
-  description = "A single label and value pair specifying that usage from only this set of labeled resources should be included in the budget. {{UIMeta group=0 order=11 updatesafe dependson=(create_budget=true) }}"
+  description = "A single label and value pair specifying that usage from only this set of labeled resources should be included in the budget. {{UIMeta group=0 order=11 updatesafe dependson=(create_budget==true) }}"
   type        = map(string)
   default     = {}
   validation {
@@ -60,13 +60,13 @@ variable "billing_budget_labels" {
 }
 
 variable "billing_budget_services" {
-  description = "A list of services ids to be included in the budget. If omitted, all services will be included in the budget. Service ids can be found at https://cloud.google.com/skus/. {{UIMeta group=0 order=12 updatesafe dependson=(create_budget=true) }}"
+  description = "A list of services ids to be included in the budget. If omitted, all services will be included in the budget. Service ids can be found at https://cloud.google.com/skus/. {{UIMeta group=0 order=12 updatesafe dependson=(create_budget==true) }}"
   type        = list(string)
   default     = null
 }
 
 variable "billing_budget_notification_email_addresses" {
-  description = "A list of email addresses which will be recieving billing budget notification alerts. A maximum of 4 channels are allowed as the first element of `trusted_users` is automatically added as one of the channel. {{UIMeta group=0 order=13 updatesafe dependson=(create_budget=true) mandatory }}"
+  description = "A list of email addresses which will be recieving billing budget notification alerts. A maximum of 4 channels are allowed as the first element of `trusted_users` is automatically added as one of the channel. {{UIMeta group=0 order=13 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = set(string)
   default     = []
   validation {
@@ -76,7 +76,7 @@ variable "billing_budget_notification_email_addresses" {
 }
 
 variable "billing_budget_pubsub_topic" {
-  description = "If true, creates a Cloud Pub/Sub topic where budget related messages will be published. Default is false. {{UIMeta group=0 order=14 updatesafe dependson=(create_budget=true) }}"
+  description = "If true, creates a Cloud Pub/Sub topic where budget related messages will be published. Default is false. {{UIMeta group=0 order=14 updatesafe dependson=(create_budget==true) }}"
   type        = bool
   default     = false
 }
@@ -124,13 +124,13 @@ variable "create_usermanaged_notebook" {
 }
 
 variable "container_image_repository" {
-  description = "Container Image Repo, only set if creating container image notebook instance by setting `create_container_image` variable to true. {{UIMeta group=2 order=4 dependson=(create_container_image=true) mandatory }}"
+  description = "Container Image Repo, only set if creating container image notebook instance by setting `create_container_image` variable to true. {{UIMeta group=2 order=4 dependson=(create_container_image==true) mandatory }}"
   type        = string
   default     = ""
 }
 
 variable "container_image_tag" {
-  description = "Container Image Tag, only set if creating container image notebook instance by setting `create_container_image` variable to true. {{UIMeta group=2 order=5 dependson=(create_container_image=true) mandatory }}"
+  description = "Container Image Tag, only set if creating container image notebook instance by setting `create_container_image` variable to true. {{UIMeta group=2 order=5 dependson=(create_container_image==true) mandatory }}"
   type        = string
   default     = "latest"
 }
@@ -160,31 +160,31 @@ variable "folder_id" {
 }
 
 variable "gpu_accelerator_type" {
-  description = "Type of GPU you would like to spin up. {{UIMeta group=2 order=10 dependson=(enable_gpu_driver=true) mandatory }}"
+  description = "Type of GPU you would like to spin up. {{UIMeta group=2 order=10 dependson=(enable_gpu_driver==true) mandatory }}"
   type        = string
   default     = ""
 }
 
 variable "gpu_accelerator_core_count" {
-  description = "Number of of GPU core count. {{UIMeta group=2 order=11 dependson=(enable_gpu_driver=true) mandatory }}"
+  description = "Number of of GPU core count. {{UIMeta group=2 order=11 dependson=(enable_gpu_driver==true) mandatory }}"
   type        = number
   default     = 0
 }
 
 variable "image_family" {
-  description = "Image of the AI notebook. {{UIMeta group=2 order=13 dependson=(create_usermanaged_notebook=true) mandatory }}"
+  description = "Image of the AI notebook. {{UIMeta group=2 order=13 dependson=(create_usermanaged_notebook==true) mandatory }}"
   type        = string
   default     = "tf-latest-cpu"
 }
 
 variable "image_project" {
-  description = "Google Cloud project where the image is hosted. {{UIMeta group=2 order=12 dependson=(create_usermanaged_notebook=true) mandatory }}"
+  description = "Google Cloud project where the image is hosted. {{UIMeta group=2 order=12 dependson=(create_usermanaged_notebook==true) mandatory }}"
   type        = string
   default     = "deeplearning-platform-release"
 }
 
 variable "ip_cidr_range" {
-  description = "Unique IP CIDR Range for AI Notebooks subnet. {{UIMeta group=3 order=5 dependson=(create_network=true,create_usermanaged_notebook=true) mandatory }}"
+  description = "Unique IP CIDR Range for AI Notebooks subnet. {{UIMeta group=3 order=5 dependson=(create_network=true,create_usermanaged_notebook===true) mandatory }}"
   type        = string
   default     = "10.142.190.0/24"
 }
@@ -196,7 +196,7 @@ variable "machine_type" {
 }
 
 variable "network_name" {
-  description = "Name of the network to be created. {{UIMeta group=3 order=2 mandatory dependson=(create_usermanaged_notebook=true) mandatory }}"
+  description = "Name of the network to be created. {{UIMeta group=3 order=2 mandatory dependson=(create_usermanaged_notebook===true) mandatory }}"
   type        = string
   default     = "ai-notebook"
 }
@@ -262,7 +262,7 @@ variable "set_trustedimage_project_policy" {
 }
 
 variable "subnet_name" {
-  description = "Name of the subnet where to deploy the Notebooks. {{UIMeta group=3 order=4 dependson=(create_usermanaged_notebook=true) mandatory }}"
+  description = "Name of the subnet where to deploy the Notebooks. {{UIMeta group=3 order=4 dependson=(create_usermanaged_notebook==true) mandatory }}"
   type        = string
   default     = "subnet-ai-notebook"
 }
