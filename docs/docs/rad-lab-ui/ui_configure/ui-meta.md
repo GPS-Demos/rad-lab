@@ -68,3 +68,29 @@ Any time a user makes an update to an existing deployment, the `updatesafe` valu
 :::danger
 Ensure you backup any data before performing a destructive action.
 :::
+
+## Dependson
+Some variables are dependant on the values of other variables, otherwise they are not used in the module deployment. The `dependson` keyword have comma seperated conditions which need to be satisfied for the variable with UIMeta to shown up in the RAD Lab UI and users to update the values.
+
+**(Example)** The `billing_budget_services` variable will only be shown on UI if the conditions within dependson UIMeta satisfies, i.e. value for `create_budget` is set to *true*.
+```terraform
+variable "billing_budget_services" {
+  description = "A list of services ids to be included in the budget. If omitted, all services will be included in the budget. Service ids can be found at https://cloud.google.com/skus/. {{UIMeta group=0 order=12 updatesafe dependson=(create_budget==true) }}"
+  type        = list(string)
+  default     = null
+}
+```
+
+NOTE: Currently only **boolean conditions** are supported within dependson UIMeta.
+
+## Mandatory
+Required variables for the module deployment and should be maked with UIMeta as `mandatory`. When the `mandatory` UIMeta is clubed with `dependson` UIMeta, the input variables is only shown on UI and is required when the conditions within `dependson` UIMeta satisfies.
+
+**(Example)** The `ip_cidr_range` variable will only be shown on UI if the conditions within dependson UIMeta satisfies, i.e. value for `create_network` and `create_usermanaged_notebook` variables is set to *true*. It will be marked as required as the UIMeta has `mandatory` tag.
+```terraform
+variable "ip_cidr_range" {
+  description = "Unique IP CIDR Range for AI Notebooks subnet. {{UIMeta group=3 order=5 dependson=(create_network==true,create_usermanaged_notebook==true) mandatory }}"
+  type        = string
+  default     = "10.142.190.0/24"
+}
+```
