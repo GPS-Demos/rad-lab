@@ -15,42 +15,42 @@
  */
 
 variable "billing_account_id" {
-  description = "Billing account ID that will be linked to the project. {{UIMeta group=0 order=3 updatesafe }}"
+  description = "Billing account ID that will be linked to the project. {{UIMeta group=0 order=3 updatesafe mandatory }}"
   type        = string
 }
 
 variable "billing_budget_alert_spend_basis" {
-  description = "The type of basis used to determine if spend has passed the threshold. {{UIMeta group=0 order=6 updatesafe }}"
+  description = "The type of basis used to determine if spend has passed the threshold. {{UIMeta group=0 order=6 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = string
   default     = "CURRENT_SPEND"
 }
 
 variable "billing_budget_alert_spent_percents" {
-  description = "A list of percentages of the budget to alert on when threshold is exceeded. {{UIMeta group=0 order=7 updatesafe }}"
+  description = "A list of percentages of the budget to alert on when threshold is exceeded. {{UIMeta group=0 order=7 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = list(number)
   default     = [0.5, 0.7, 1]
 }
 
 variable "billing_budget_amount" {
-  description = "The amount to use as the budget in USD. {{UIMeta group=0 order=8 updatesafe }}"
+  description = "The amount to use as the budget in USD. {{UIMeta group=0 order=8 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = number
   default     = 500
 }
 
 variable "billing_budget_amount_currency_code" {
-  description = "The 3-letter currency code defined in ISO 4217 (https://cloud.google.com/billing/docs/resources/currency#list_of_countries_and_regions). It must be the currency associated with the billing account. {{UIMeta group=0 order=9 updatesafe }}"
+  description = "The 3-letter currency code defined in ISO 4217 (https://cloud.google.com/billing/docs/resources/currency#list_of_countries_and_regions). It must be the currency associated with the billing account. {{UIMeta group=0 order=9 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = string
   default     = "USD"
 }
 
 variable "billing_budget_credit_types_treatment" {
-  description = "Specifies how credits should be treated when determining spend for threshold calculations. {{UIMeta group=0 order=10 updatesafe }}"
+  description = "Specifies how credits should be treated when determining spend for threshold calculations. {{UIMeta group=0 order=10 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = string
   default     = "INCLUDE_ALL_CREDITS"
 }
 
 variable "billing_budget_labels" {
-  description = "A single label and value pair specifying that usage from only this set of labeled resources should be included in the budget. {{UIMeta group=0 order=11 updatesafe }}"
+  description = "A single label and value pair specifying that usage from only this set of labeled resources should be included in the budget. {{UIMeta group=0 order=11 updatesafe dependson=(create_budget==true) }}"
   type        = map(string)
   default     = {}
   validation {
@@ -60,13 +60,13 @@ variable "billing_budget_labels" {
 }
 
 variable "billing_budget_services" {
-  description = "A list of services ids to be included in the budget. If omitted, all services will be included in the budget. Service ids can be found at https://cloud.google.com/skus/. {{UIMeta group=0 order=12 updatesafe }}"
+  description = "A list of services ids to be included in the budget. If omitted, all services will be included in the budget. Service ids can be found at https://cloud.google.com/skus/. {{UIMeta group=0 order=12 updatesafe dependson=(create_budget==true) }}"
   type        = list(string)
   default     = null
 }
 
 variable "billing_budget_notification_email_addresses" {
-  description = "A list of email addresses which will be recieving billing budget notification alerts. A maximum of 4 channels are allowed as the first element of `trusted_users` is automatically added as one of the channel. {{UIMeta group=0 order=13 updatesafe }}"
+  description = "A list of email addresses which will be recieving billing budget notification alerts. A maximum of 4 channels are allowed as the first element of `trusted_users` is automatically added as one of the channel. {{UIMeta group=0 order=13 updatesafe dependson=(create_budget==true) mandatory }}"
   type        = set(string)
   default     = []
   validation {
@@ -76,7 +76,7 @@ variable "billing_budget_notification_email_addresses" {
 }
 
 variable "billing_budget_pubsub_topic" {
-  description = "If true, creates a Cloud Pub/Sub topic where budget related messages will be published. Default is false. {{UIMeta group=0 order=14 updatesafe }}"
+  description = "If true, creates a Cloud Pub/Sub topic where budget related messages will be published. Default is false. {{UIMeta group=0 order=14 updatesafe dependson=(create_budget==true) }}"
   type        = bool
   default     = false
 }
@@ -112,25 +112,25 @@ variable "deployment_id" {
 }
 
 variable "disk_size_gb_nodes" {
-  description = "Size of the disks attached to the nodes. {{UIMeta group=3 order=10 }}"
+  description = "Size of the disks attached to the nodes. {{UIMeta group=3 order=10 mandatory }}"
   type        = number
   default     = 256
 }
 
 variable "disk_type_nodes" {
-  description = "Type of disks to attach to the nodes. {{UIMeta group=3 order=9 }}"
+  description = "Type of disks to attach to the nodes. {{UIMeta group=3 order=9 mandatory }}"
   type        = string
   default     = "pd-standard"
 }
 
 variable "elastic_search_instance_count" {
-  description = "Number of instances of the Elastic Search pod. {{UIMeta group=4 order=3 updatesafe }}"
+  description = "Number of instances of the Elastic Search pod. {{UIMeta group=4 order=2 updatesafe dependson=(deploy_elastic_search==true) mandatory }}"
   type        = string
   default     = "1"
 }
 
 variable "elk_version" {
-  description = "Version for Elastic Search and Kibana. {{UIMeta group=4 order=4 }}"
+  description = "Version for Elastic Search and Kibana. {{UIMeta group=4 order=3 dependson=(deploy_elastic_search==true) mandatory }}"
   type        = string
   default     = "7.15.1"
 }
@@ -148,13 +148,13 @@ variable "enable_services" {
 }
 
 variable "folder_id" {
-  description = "Folder ID where the project should be created. It can be skipped if already setting organization_id. Leave blank if the project should be created directly underneath the Organization node. {{UIMeta group=0 order=2 updatesafe }}"
+  description = "Folder ID where the project should be created. It can be skipped if already setting organization_id. Leave blank if the project should be created directly underneath the Organization node. {{UIMeta group=0 order=2 updatesafe mandatory }}"
   type        = string
   default     = ""
 }
 
 variable "gke_cluster_name" {
-  description = "Name that will be assigned to the GKE cluster. {{UIMeta group=3 order=1 }}"
+  description = "Name that will be assigned to the GKE cluster. {{UIMeta group=3 order=1 mandatory }}"
   type        = string
   default     = "elastic-search-cluster"
 }
@@ -165,57 +165,50 @@ variable "gke_version" {
   default     = "1.20.10-gke.1600"
 }
 
-variable "kibana_instance_count" {
-  description = "Number of Kibana instances deployed in the cluster. {{UIMeta group=4 order=2 updatesafe }}"
-  type        = string
-  default     = "1"
-}
-
-
 variable "master_ipv4_cidr_block" {
-  description = "IPv4 CIDR block to assign to the Master cluster. {{UIMeta group=3 order=11 }}"
+  description = "IPv4 CIDR block to assign to the Master cluster. {{UIMeta group=3 order=11 mandatory }}"
   type        = string
   default     = "10.200.0.0/28"
 }
 
 variable "network_cidr_block" {
-  description = "CIDR block to be assigned to the network. {{UIMeta group=2 order=5 }}"
+  description = "CIDR block to be assigned to the network. {{UIMeta group=2 order=5 dependson=(create_network==true) mandatory}}"
   type        = string
   default     = "10.0.0.0/16"
 }
 
 variable "network_name" {
-  description = "Name to be assigned to the network hosting the GKE cluster. {{UIMeta group=2 order=2 }}"
+  description = "Name to be assigned to the network hosting the GKE cluster. {{UIMeta group=2 order=2 mandatory }}"
   type        = string
   default     = "elastic-search-nw"
 }
 
 variable "node_pool_machine_type" {
-  description = "Machine type for the node pool. {{UIMeta group=3 order=6 }}"
+  description = "Machine type for the node pool. {{UIMeta group=3 order=6 mandatory }}"
   type        = string
   default     = "e2-medium"
 }
 
 variable "node_pool_max_count" {
-  description = "Maximum instance count for the custom node pool. {{UIMeta group=3 order=7 updatesafe }}"
+  description = "Maximum instance count for the custom node pool. {{UIMeta group=3 order=7 updatesafe mandatory }}"
   type        = number
   default     = 10
 }
 
 variable "node_pool_min_count" {
-  description = "Minimum instance count for the custom nodepool. {{UIMeta group=3 order=8 updatesafe }}"
+  description = "Minimum instance count for the custom nodepool. {{UIMeta group=3 order=8 updatesafe mandatory }}"
   type        = number
   default     = 1
 }
 
 variable "node_pool_name" {
-  description = "Name of the nodepool. {{UIMeta group=3 order=5 }}"
+  description = "Name of the nodepool. {{UIMeta group=3 order=5 mandatory }}"
   type        = string
   default     = "elastic-search-pool"
 }
 
 variable "organization_id" {
-  description = "Organization ID where the project will be created. It can be skipped if already setting folder_id. {{UIMeta group=0 order=1 }}"
+  description = "Organization ID where the project will be created. It can be skipped if already setting folder_id. {{UIMeta group=0 order=1 mandatory }}"
   type        = string
   default     = ""
 }
@@ -233,31 +226,31 @@ variable "owner_users" {
 }
 
 variable "pod_cidr_block" {
-  description = "CIDR block to be assigned to pods running in the GKE cluster. {{UIMeta group=3 order=13 }}"
+  description = "CIDR block to be assigned to pods running in the GKE cluster. {{UIMeta group=3 order=13 dependson=(create_network==true) mandatory }}"
   type        = string
   default     = "10.100.0.0/16"
 }
 
 variable "pod_ip_range_name" {
-  description = "Range name for the pod IP addresses. {{UIMeta group=3 order=12 }}"
+  description = "Range name for the pod IP addresses. {{UIMeta group=3 order=12 mandatory }}"
   type        = string
   default     = "pod-ip-range"
 }
 
 variable "preemptible_nodes" {
-  description = "Use preemptible VMs for the node pools. {{UIMeta group=3 order=4 }}"
+  description = "Use preemptible VMs for the node pools. {{UIMeta group=3 order=4 mandatory }}"
   type        = bool
   default     = true
 }
 
 variable "project_id_prefix" {
-  description = "If `create_project` is true, this will be the prefix of the Project ID & name created. If `create_project` is false this will be the actual Project ID, of the existing project where you want to deploy the module. {{UIMeta group=1 order=2 }}"
+  description = "If `create_project` is true, this will be the prefix of the Project ID & name created. If `create_project` is false this will be the actual Project ID, of the existing project where you want to deploy the module. {{UIMeta group=1 order=2 mandatory }}"
   type        = string
   default     = "radlab-app-mod-elastic"
 }
 
 variable "region" {
-  description = "Region where the resources should be created. {{UIMeta group=2 order=3 }}"
+  description = "Region where the resources should be created. {{UIMeta group=2 order=3 mandatory }}"
   type        = string
   default     = "us-west1"
 }
@@ -275,13 +268,13 @@ variable "resource_creator_identity" {
 }
 
 variable "service_cidr_block" {
-  description = "CIDR block to be assigned to services running in the GKE cluster. {{UIMeta group=3 order=15 }}"
+  description = "CIDR block to be assigned to services running in the GKE cluster. {{UIMeta group=3 order=15 dependson=(create_network==true) mandatory}}"
   type        = string
   default     = "10.150.0.0/16"
 }
 
 variable "service_ip_range_name" {
-  description = "Name for the IP range for services. {{UIMeta group=3 order=14 }}"
+  description = "Name for the IP range for services. {{UIMeta group=3 order=14 mandatory }}"
   type        = string
   default     = "service-ip-range"
 }
@@ -305,7 +298,7 @@ variable "set_vpc_peering_policy" {
 }
 
 variable "subnet_name" {
-  description = "Name to be assigned to the subnet hosting the GKE cluster. {{UIMeta group=2 order=4 }}"
+  description = "Name to be assigned to the subnet hosting the GKE cluster. {{UIMeta group=2 order=4 mandatory }}"
   type        = string
   default     = "elastic-search-snw"
 }
