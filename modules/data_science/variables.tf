@@ -184,7 +184,7 @@ variable "image_project" {
 }
 
 variable "ip_cidr_range" {
-  description = "Unique IP CIDR Range for AI Notebooks subnet. {{UIMeta group=3 order=5 dependson=(create_network==true,create_usermanaged_notebook==true) mandatory }}"
+  description = "Unique IP CIDR Range for AI Notebooks subnet. {{UIMeta group=3 order=5 dependson=(create_network==true&&create_usermanaged_notebook==true) mandatory }}"
   type        = string
   default     = "10.142.190.0/24"
 }
