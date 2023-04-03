@@ -70,7 +70,16 @@ Ensure you backup any data before performing a destructive action.
 :::
 
 ## Dependson
-Some variables are dependant on the values of other variables, otherwise they are not used in the module deployment. The `dependson` keyword have comma seperated conditions which need to be satisfied for the variable with UIMeta to shown up in the RAD Lab UI and users to update the values.
+Some variables are dependant on the values of other variables. The `dependson` keyword defines an expression that must be satisfied for tha associated variable to display in RAD Lab UI.
+
+### Specification
+- The `dependson` currently supports equals and not-equals comparisons (via `==` and `!=` respectively)
+- Comparisons can be joined with either `&&` or `||` expressions (logical AND and OR respectively)
+- The values being compared must be Javascript primities
+  - number
+  - string
+  - null
+  - boolean
 
 **(Example)** The `billing_budget_services` variable will only be shown on UI if the conditions within dependson UIMeta satisfies, i.e. value for `create_budget` is set to *true*.
 ```terraform
