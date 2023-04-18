@@ -94,9 +94,9 @@ variable "confidential_tags" {
     description   = string
   }))
   default     = {
-    name = {
-        display_name    = "FULL_NAME",
-        description     = "A full person name, which can include first names, middle names or initials, and last names."
+    "name": {
+      "description": "A full person name, which can include first names, middle names or initials, and last names.",
+      "display_name": "FULL_NAME"
     }
   }
 }
@@ -182,9 +182,9 @@ variable "private_tags" {
     description   = string
   }))
   default     = {
-    dob = {
-        display_name    = "DOB",
-        description     = "Date of Birth of the person."
+    "dob": {
+      "description": "Date of Birth of the person.",
+      "display_name": "DOB"
     }
   }
 }
@@ -219,41 +219,41 @@ variable "data_fields" {
     type  = string
   }))
   default     = {
-    email = {
-      mode  = "NULLABLE",
-      type  = "STRING"
+    "city": {
+      "mode": "NULLABLE",
+      "type": "STRING"
     },
-    name = {
-      mode  = "NULLABLE",
-      type  = "STRING"
+    "dl_id": {
+      "mode": "NULLABLE",
+      "type": "STRING"
     },
-    street = {
-      mode  = "NULLABLE",
-      type  = "STRING"
+    "dob": {
+      "mode": "NULLABLE",
+      "type": "DATE"
     },
-    city = {
-      mode  = "NULLABLE",
-      type  = "STRING"
+    "email": {
+      "mode": "NULLABLE",
+      "type": "STRING"
     },
-    state = {
-      mode  = "NULLABLE",
-      type  = "STRING"
+    "exp_date": {
+      "mode": "NULLABLE",
+      "type": "DATE"
     },
-    zip = {
-      mode  = "NULLABLE",
-      type  = "INTEGER"
+    "name": {
+      "mode": "NULLABLE",
+      "type": "STRING"
     },
-    dob = {
-      mode  = "NULLABLE",
-      type  = "DATE"
+    "state": {
+      "mode": "NULLABLE",
+      "type": "STRING"
     },
-    dl_id = {
-      mode  = "NULLABLE",
-      type  = "STRING"
+    "street": {
+      "mode": "NULLABLE",
+      "type": "STRING"
     },
-    exp_date = {
-      mode  = "NULLABLE",
-      type  = "DATE"
+    "zip": {
+      "mode": "NULLABLE",
+      "type": "INTEGER"
     }
   }
 }
@@ -287,9 +287,9 @@ variable "sensitive_tags" {
     description   = string
   }))
   default     = {
-    dl_id = {
-        display_name    = "DRIVER_LICENSE_ID",
-        description     = "Driver License document ID."
+    "dl_id": {
+      "description": "Driver License document ID.",
+      "display_name": "DRIVER_LICENSE_ID"
     }
   }
 }
