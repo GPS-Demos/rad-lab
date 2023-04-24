@@ -20,6 +20,18 @@ variable "access_context_manager_policy_id" {
   default     = ""
 }
 
+variable "ah_sharing_groups" {
+  description = "The list of groups to share Non-confidential Dataset via Analytics Hub (e.g. `myteam@abc.com`). {{UIMeta group=4 order=2 updatesafe }}"
+  type        = set(string)
+  default     = []
+}
+
+variable "ah_sharing_users" {
+  description = "The list of users to share Non-confidential Dataset via Analytics Hub (e.g. `username@abc.com`). {{UIMeta group=4 order=3 updatesafe }}"
+  type        = set(string)
+  default     = []
+}
+
 variable "billing_account_id" {
   description = "Billing Account associated to the GCP Resources.  {{UIMeta group=0 order=3 updatesafe }}"
   type        = string
@@ -99,6 +111,12 @@ variable "confidential_tags" {
       "display_name": "FULL_NAME"
     }
   }
+}
+
+variable "create_ah_non_conf_sharing" {
+  description = "If you want to share non-confidential dataset via analytics hub. {{UIMeta group=4 order=1 updatesafe }}"
+  type        = bool
+  default     = false
 }
 
 variable "create_budget" {

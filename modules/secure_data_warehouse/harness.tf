@@ -65,7 +65,7 @@ locals {
         "storage-api.googleapis.com"
     ]
 
-    project_services_non_conf_data = local.default_apis_non_conf_data
+    project_services_non_conf_data = var.create_ah_non_conf_sharing ?  distinct(concat(local.default_apis_non_conf_data,["analyticshub.googleapis.com"])) : local.default_apis_non_conf_data
 
     default_apis_conf_data = [
         "accesscontextmanager.googleapis.com",
