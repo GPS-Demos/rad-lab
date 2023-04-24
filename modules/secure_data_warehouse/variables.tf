@@ -21,13 +21,13 @@ variable "access_context_manager_policy_id" {
 }
 
 variable "ah_sharing_groups" {
-  description = "The list of groups to share Non-confidential Dataset via Analytics Hub (e.g. `myteam@abc.com`). {{UIMeta group=4 order=2 updatesafe }}"
+  description = "The list of groups to share Non-confidential Dataset via Analytics Hub (e.g. `myteam@abc.com`). {{UIMeta group=1 order=13 updatesafe }}"
   type        = set(string)
   default     = []
 }
 
 variable "ah_sharing_users" {
-  description = "The list of users to share Non-confidential Dataset via Analytics Hub (e.g. `username@abc.com`). {{UIMeta group=4 order=3 updatesafe }}"
+  description = "The list of users to share Non-confidential Dataset via Analytics Hub (e.g. `username@abc.com`). {{UIMeta group=1 order=14 updatesafe }}"
   type        = set(string)
   default     = []
 }
@@ -114,7 +114,7 @@ variable "confidential_tags" {
 }
 
 variable "create_ah_non_conf_sharing" {
-  description = "If you want to share non-confidential dataset via analytics hub. {{UIMeta group=4 order=1 updatesafe }}"
+  description = "If you want to share non-confidential dataset via analytics hub. {{UIMeta group=3 order=7 updatesafe }}"
   type        = bool
   default     = false
 }
