@@ -44,7 +44,7 @@ data "http" "non_conf_data_exchange" {
   
   depends_on = [
     time_sleep.wait_120_seconds,
-    # module.regional_reid_pipeline
+    module.regional_reid_pipeline
   ]
 }
 
