@@ -9,7 +9,7 @@ import StringField from "@/components/forms/fields/StringField"
 import RegionStringField from "@/components/forms/fields/RegionStringField"
 import ZoneStringField from "@/components/forms/fields/ZoneStringField"
 
-import { ZONE_LIST } from "@/utils/data"
+import { ZONE_LIST, getZonesByRegion } from "@/utils/data"
 
 interface IDefaultStepCreatorProps {
   variableList: IUIVariable[]
@@ -35,23 +35,9 @@ const DefaultStepCreator: React.FC<IDefaultStepCreatorProps> = ({
     return error
   }
 
-  const zoneGetByRegion = (regionName: string) => {
-    const zoneListData = ZONE_LIST.filter((v) => {
-      const toMatchData = v.split("-")
-      toMatchData.pop()
-      const checkMatch = toMatchData.join("-")
-      if (checkMatch === regionName) {
-        return v
-      } else {
-        return ""
-      }
-    })
-    setZoneListData(zoneListData)
-  }
-
   const onChangeRegion = (event: React.ChangeEvent<HTMLInputElement>) => {
     values[event.target.name] = event.target.value
-    zoneGetByRegion(event.target.value)
+    setZoneListData(getZonesByRegion(ZONE_LIST)(event.target.value))
   }
 
   const renderControls = (variable: IUIVariable) => {
@@ -78,7 +64,7 @@ const DefaultStepCreator: React.FC<IDefaultStepCreatorProps> = ({
 
   useEffect(() => {
     // To dispaly default list of zone based on region
-    zoneGetByRegion(values.region)
+    setZoneListData(getZonesByRegion(ZONE_LIST)(values.region))
   }, [])
 
   return (

@@ -1010,6 +1010,11 @@ export const ZONE_LIST: string[] = [
   "us-west4-c",
 ]
 
+export const regionFromZone = (zone: string) => zone.replace(/-\w$/, "")
+
+export const getZonesByRegion = (zones: string[]) => (region: string) =>
+  zones.filter((zone) => regionFromZone(zone) === region)
+
 export const DATA_DEFAULT_VARS = `
 
 variable "billing_account_id" {
