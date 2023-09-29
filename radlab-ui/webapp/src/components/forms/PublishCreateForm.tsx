@@ -11,10 +11,10 @@ import {
 } from "@/utils/types"
 import startCase from "lodash/startCase"
 import { classNames } from "@/utils/dom"
-import { Formik, Form } from "formik"
+import { Formik, Form, FormikValues } from "formik"
 import axios from "axios"
 import { alertStore } from "@/store"
-import { initialFormikData } from "@/utils/terraform"
+import { formatRelevantVariables, initialFormikData } from "@/utils/terraform"
 import { mergeAll } from "ramda"
 
 interface IPublishCreateFormProps {
@@ -39,6 +39,7 @@ const PublishCreateForm: React.FC<IPublishCreateFormProps> = ({
   const [completed, setCompleted] = useState(false)
   const [isSubmitLoading, setSubmitLoading] = useState(false)
   const [isSubmit, setSubmit] = useState(false)
+  const [answerValueData, setAnswerValueData] = useState<FormikValues>({})
 
   const currentVarsData = formVariables[step]
   if (!currentVarsData) {
@@ -136,11 +137,22 @@ const PublishCreateForm: React.FC<IPublishCreateFormProps> = ({
     return mergeAll([initialUpdateFormData, defaultSettingVariables])
   }
 
+  const handleChangeValues = (answerValues: FormikValues) => {
+    setAnswerValueData(answerValues)
+  }
+
   useEffect(() => {
     const initialFormVariable = setDefaultSettingVariables()
+    const currentVarDataFormat = Object.values(currentVarsData.variables)
+    const relevantFormVariables = formatRelevantVariables(
+      currentVarDataFormat,
+      answerValueData,
+    )
+    const relevantFormVariablesFormat = Object.assign({}, relevantFormVariables)
+
     setInitialData(initialFormVariable)
-    setFormData([currentVarsData.variables])
-  }, [currentVarsData.variables])
+    setFormData([relevantFormVariablesFormat])
+  }, [currentVarsData.variables, answerValueData])
 
   return (
     <div className="w-full">
@@ -173,7 +185,12 @@ const PublishCreateForm: React.FC<IPublishCreateFormProps> = ({
                 {Object.keys(formData).map((grpId, index) => {
                   const group: undefined | IUIVariable[] = formData[grpId]
                   return group ? (
-                    <StepCreator variableList={group} idx={index} key={grpId} />
+                    <StepCreator
+                      variableList={group}
+                      idx={index}
+                      key={grpId}
+                      handleChangeValues={handleChangeValues}
+                    />
                   ) : (
                     <></>
                   )

@@ -12,18 +12,30 @@ import ListField from "@/components/forms/fields/ListField"
 import MapField from "@/components/forms/fields/MapField"
 import MapNestedField from "@/components/forms/fields/MapNestedField"
 import { validators } from "@/utils/validation"
+import { useFormikContext } from "formik"
+import { useEffect } from "react"
 
 interface StepCreator {
   variableList: IUIVariable[]
   idx: number
+  handleChangeValues: Function
 }
 
 const TF_PRIMITIVES = ["number", "string"]
 
 type IFieldValidateValue = { value: string | number | boolean }
 
-const StepCreator: React.FC<StepCreator> = ({ variableList, idx }) => {
+const StepCreator: React.FC<StepCreator> = ({
+  variableList,
+  idx,
+  handleChangeValues,
+}) => {
   const sortedList = sortBy(variableList, "order")
+  const { values } = useFormikContext()
+
+  useEffect(() => {
+    handleChangeValues(values)
+  }, [values])
 
   const validate = (variable: IUIVariable) => (value: IFieldValidateValue) => {
     // Type checks

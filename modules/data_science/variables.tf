@@ -196,7 +196,7 @@ variable "machine_type" {
 }
 
 variable "network_name" {
-  description = "Name of the network to be created. {{UIMeta group=3 order=2 mandatory dependson=(create_usermanaged_notebook==true) mandatory }}"
+  description = "Name of the network to be created. {{UIMeta group=3 order=2 dependson=(create_usermanaged_notebook==true) mandatory }}"
   type        = string
   default     = "ai-notebook"
 }
