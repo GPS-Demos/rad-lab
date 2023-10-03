@@ -149,7 +149,7 @@ const mapHclToUIVar = (
   } = parseUIMeta(hclVar.description ?? null, hclVar.type)
 
   return {
-    name: name,
+    name,
     display: startCase(name),
     description,
     type: formatType(hclVar.type),
