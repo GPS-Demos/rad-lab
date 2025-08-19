@@ -41,7 +41,7 @@ resource "google_storage_bucket_object" "cf_create_update_module_zip" {
 resource "google_cloudfunctions_function" "create_update_module" {
   project               = module.project.project_id
   name                  = format("%s-%s", var.function_create_module_name, substr(data.archive_file.cf_create_update_module_zip.output_md5, 0, 5))
-  runtime               = "nodejs16"
+  runtime               = "nodejs20"
   description           = "Function that will trigger a Cloud Build job when a new module is created."
   entry_point           = "createRadLabModule"
   region                = var.region
@@ -120,7 +120,7 @@ resource "google_storage_bucket_object" "cf_delete_module_zip" {
 resource "google_cloudfunctions_function" "delete_module" {
   project               = module.project.project_id
   name                  = format("%s-%s", var.function_delete_module_name, substr(data.archive_file.cf_delete_module_zip.output_md5, 0, 5))
-  runtime               = "nodejs16"
+  runtime               = "nodejs20"
   description           = "Function that will trigger a Cloud Build job when a new module is created."
   entry_point           = "deleteRadLabModule"
   region                = var.region

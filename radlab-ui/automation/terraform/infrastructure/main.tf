@@ -30,6 +30,7 @@ module "project" {
   billing_account_id = var.billing_account_id
   lien_reason        = "RAD Lab UI project, shouldn't be deleted."
 
+  create_project      = false
   project_apis = [
     "firestore.googleapis.com",
     "pubsub.googleapis.com",
